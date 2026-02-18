@@ -3,12 +3,12 @@
 
 set -euo pipefail
 
-BASE="$HOME/scripts/git_security"
-BIN_DIR="$HOME/scripts/git_security/bin"
-STATE_DIR="$HOME/scripts/git_security/state"
+BASE="$HOME/scripts/git-security"
+BIN_DIR="$HOME/scripts/git-security/bin"
+STATE_DIR="$HOME/scripts/git-security/state"
 STATE_FILE="$STATE_DIR/panic_state"
 LOG_DIR="$BASE/logs"
-LOG_FILE="$LOG_DIR/git_security.log"
+LOG_FILE="$LOG_DIR/git-security.log"
 
 mkdir -p "$BASE/logs"
 

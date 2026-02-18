@@ -9,7 +9,7 @@ LIB_DIR="$BASE_DIR/lib"
 
 source "$LIB_DIR/net.sh"
 
-STATE_DIR="$HOME/scripts/git_security/state"
+STATE_DIR="$HOME/scripts/git-security/state"
 STATE_FILE="$STATE_DIR/panic_state"
 
 mkdir -p "$STATE_DIR"
