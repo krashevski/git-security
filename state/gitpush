@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$HOME/scripts/git_security/state/git_push_guard.sh" "$@"

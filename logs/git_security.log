@@ -1,0 +1,13 @@
+2026-02-17 18:42:23 ALLOW push
+2026-02-17 18:46:45 ALLOW passwd (offline)
+2026-02-17 18:47:39 ALLOW push
+2026-02-17 18:51:24 DENY push (network enabled)
+2026-02-17 18:54:08 UNLOCK git push
+2026-02-17 18:58:38 DENY passwd (network enabled)
+2026-02-17 18:59:05 ALLOW passwd (offline)
+2026-02-18 11:00:17 ALLOW passwd (offline)
+2026-02-18 11:17:18 ALLOW passwd (offline)
+2026-02-18 11:19:11 Password changed, network remains disabled
+2026-02-18 11:25:08 ALLOW passwd (offline)
+2026-02-18 11:26:19 Password changed, network remains disabled
+2026-02-18 11:58:05 DENY passwd (network enabled)
