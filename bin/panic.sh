@@ -2,11 +2,13 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-"$SCRIPT_DIR/net_status.sh"
-"$SCRIPT_DIR/passwd_offline.sh"
+BIN_DIR="$BASE_DIR/bin"
+LIB_DIR="$BASE_DIR/lib"
 
-BIN_DIR="$HOME/scripts/git_security/bin"
+source "$LIB_DIR/net.sh"
+
 STATE_DIR="$HOME/scripts/git_security/state"
 STATE_FILE="$STATE_DIR/panic_state"
 
@@ -25,26 +27,6 @@ if [[ "$SAVED_DATE" != "$TODAY" ]]; then
     COUNT=0
 fi
 
-# Функция 
-wait_net_up() {
-    local retries=3
-    local delay=10
-    local i
-
-    for ((i=1; i<=retries; i++)); do
-        echo "[INFO] Checking network status (attempt $i/$retries)..."
-        if ./net_status.sh; then
-            echo "[OK] Network is UP"
-            return 0
-        fi
-        echo "[WARN] Network not ready, retrying in ${delay}s..."
-        sleep "$delay"
-    done
-
-    echo "[ERROR] Network did not come up after ${retries} attempts"
-    return 1
-}
-
 COUNT=$((COUNT + 1))
 
 case "$COUNT" in
@@ -52,25 +34,26 @@ case "$COUNT" in
         "$BIN_DIR/emergency_net_off.sh"
         echo "[OK] Network is disabled for 10 seconds"
         sleep 10
-        ./emergency_net_on.sh
-        wait_net_up || true
+        "$BIN_DIR/emergency_net_on.sh"
+        wait_net_up "$BIN_DIR/net_check.sh" || true
         ;;
     2)
         "$BIN_DIR/emergency_net_off.sh"
         echo "[OK] Network is disabled for 5 minutes"
         sleep 300
-        ./emergency_net_on.sh
-        wait_net_up || true
+        "$BIN_DIR/emergency_net_on.sh"
+        wait_net_up "$BIN_DIR/net_check.sh" || true
         ;;
     3)
-        if ./passwd_offline.sh; then
+        if "$BIN_DIR/passwd_offline.sh"; then
             echo "[OK] Password changed successfully"
-           ./emergency_net_on.sh
-           wait_net_up || true
+            "$BIN_DIR/emergency_net_on.sh"
+            wait_net_up "$BIN_DIR/net_check.sh" || true
         else
-           echo "[ERROR] Password was NOT changed"
+            echo "[ERROR] Password was NOT changed"
         fi
         ;;
+
     4) 
         "$BIN_DIR/emergency_net_off.sh"
         echo "[SECURITY] There is a serious network issue. Please contact support."
