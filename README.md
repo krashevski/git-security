@@ -54,4 +54,4 @@ MIT
 
 ## Author
 
-Vladislav Krashevski
+Vladislav Krashevski with support ChatGPT
