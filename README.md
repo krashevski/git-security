@@ -15,6 +15,7 @@ A set of scripts for secure Git management and network access control when worki
 - `./panic.sh` — controls network enablement and disablement and password changes for PANIC MODE (emergency shutdown).
 - `./network-pause.sh` - сentral network pause controller.
 - `./net_status.sh` - network status.
+- `./burn_zip_archives.sh` - burning ZIP archives to CD/DVD.
 - `./menu.sh` - GIT-SECURITY control menu.
 
 ## Installation

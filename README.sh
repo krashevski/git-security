@@ -20,6 +20,7 @@ echo "Current working scripts:"
 echo " - ./panic.sh — controls network enablement and disablement and password changes for PANIC MODE."
 echo " - ./network-pause.sh - сentral network pause controller."
 echo " - ./net_status.sh - network status."
+echo " - ./burn_zip_archives.sh` - burning ZIP archives to CD/DVD."
 echo " - ./menu.sh - GIT-SECURITY control menu."
 echo
 echo "Installation and run:"

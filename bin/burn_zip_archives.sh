@@ -4,8 +4,6 @@
 # Проект: git-security
 # -------------------------------------------------------------
 :<<'DOC'
-# Зависимости: 
-sudo apt install growisofs
 # Использование: 
 chmod +x burn_zip_archives.sh
 ./burn_zip_archives.sh
