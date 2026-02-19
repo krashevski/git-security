@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # =============================================================
-# network-pause.sh - Central network pause controller
+# network-pause.sh - сentral network pause controller
 # -------------------------------------------------------------
 # Purpose:
-#   Safely disable network access for sensitive operations
-#   (password change, git operations, emergency mode).
+#   Safely disable network access for sensitive operations.
 #
 # Uses:
 #   lib/net.sh
@@ -30,6 +29,23 @@ if net_is_up; then
 else
     echo "[SECURITY] Network is already DISABLED"
     echo
-    echo "[INFO] You may re-enable network access with:"
-    echo "       $BIN_DIR/emergency_net_on.sh"
+    echo
+    read -r -p "[QUESTION] Хотите включить сеть сейчас? (y/n): " answer
+
+    case "${answer,,}" in
+        y|yes)
+            echo "[INFO] Enabling network..."
+            "$BIN_DIR/emergency_net_on.sh"
+            ;;
+        n|no|"")
+            echo "[INFO] Network remains disabled"
+            echo "[INFO] You may re-enable network later with:"
+            echo "       $BIN_DIR/emergency_net_on.sh"
+            ;;
+        *)
+            echo "[WARN] Invalid answer. Network remains disabled."
+            echo "[INFO] To enable network manually run:"
+            echo "       $BIN_DIR/emergency_net_on.sh"
+            ;;
+    esac
 fi

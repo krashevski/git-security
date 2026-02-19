@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
+# =============================================================
+# panic.sh - controls network enablement and disablement and password changes
+# -------------------------------------------------------------
+# Purpose:
+#   Safely disable network access in an emergency and
+#   change the password.
+#
+# Uses:
+#   lib/net.sh
+#   emergency_net_off.sh
+#   passwd_offline.sh
+# =============================================================
+
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

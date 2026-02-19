@@ -1,54 +1,58 @@
 # git_security
 
-A set of scripts for secure Git management and network access control when working with repositories.
+Набор скриптов для безопасного управления Git и контроля доступа к сети при работе с репозиториями.
 
-## Description
+## Описание
 
-`git_security` helps:
+`GIT-SECURITY` помогает:
 
-- Enable or disable the network when needed.
-- Check the network status before changing the password.
-- Log security-related actions.
+- Проверять состояние сети.
+- Включать или отключать сеть, изменять пароль при необходимости в аварийном режиме.
+- Регистрировать действия, связанные с безопасностью.
 
-## Operational Scripts
+## Операционные скрипты
 
-- `./panic.sh` — the main script that controls network enablement and disablement and password changes.
+- `./panic.sh` — управляет включением и выключением сети, а также изменением паролей для режима PANIC (аварийное завершение работы).
+- `./network-pause.sh` — центральный контроллер паузы сети.
+- `./net_status.sh` — состояние сети.
+- `./menu.sh` — меню управления GIT-SECURITY.
 
-## Installation
+## Установка
 
-1. Clone the repository:
+1. Клонируйте репозиторий:
 
 ```bash
 git clone https://github.com/krashevski/git_security.git
 ```
 
-2. Change to the project directory:
+2. Перейдите в каталог проекта:
 ```bash
 cd git_security
 ```
 
-3. Grant execute permissions for the scripts:
+3. Предоставьте скриптам права на выполнение:
 ```bash
 chmod +x *.sh
 ```
 
-## Usage
+## Использование
 
-Run the main script:
+Запустите основной скрипт:
 ```bash
-./bin/panic.sh
+./bin/menu.sh
 ```
-Logs are created in the ./logs directory.
+Логи создаются в каталоге ./logs.
 
-## Notes
+## Примечания
 
-* Scripts were tested in the home environment (~/.scripts/git_security).
-* Can also be used in test mode by changing the log paths and status.
+* Скрипты были протестированы в домашней среде (~/.scripts/git_security).
 
-## License
+* Также можно использовать в тестовом режиме, изменив пути к логам и статус.
+
+## Лицензия
 
 MIT
 
-## Author
+## Автор
 
-Vladislav Krashevski
+Владислав Крашевский
