@@ -16,6 +16,7 @@ while true; do
     echo "1) Check network status"
     echo "2) Pause network (safe mode)"
     echo "3) PANIC MODE (emergency shutdown)"
+    echo "4) Git-security burn ZIPs"
     echo "-------------------------------------------------"
     echo "0) Exit"
     echo "================================================="
@@ -40,6 +41,7 @@ while true; do
                 echo "[INFO] Panic cancelled"
             fi
             ;;
+        4)  "$BIN_DIR/burn_zip_archives.sh" ;; # Записать ZIP-архивы git-security на CD/DVD
         0)
             echo "Bye."
             exit 0
