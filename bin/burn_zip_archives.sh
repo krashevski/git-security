@@ -50,6 +50,12 @@ mkisofs -R -J \
   /home/vladislav/scripts/SHA256SUMS \
   /home/vladislav/scripts/MANIFEST.txt
 
+mkisofs -R -J \
+  -o "$TARGET_HOME/scripts-backup.iso" \
+  "$SOURCE_DIR"/*.zip \
+  "$SOURCE_DIR/SHA256SUMS" \
+  "$SOURCE_DIR/MANIFEST.txt"
+
 ISO_MOUNT="/tmp/iso_mnt"
 mkdir -p "$ISO_MOUNT"
 sudo mount -o loop,ro /home/vladislav/scripts-backup.iso "$ISO_MOUNT"
@@ -75,7 +81,7 @@ COUNT=$(wc -l < "$TMP_LIST")
 echo "[INFO] Writing $COUNT archives to $DEVICE"
 
 # Запись ISO на диск
-if wodim dev="$DEVICE" -v /home/vladislav/scripts-backup.iso; then
+if wodim dev="$DEVICE" -v "$TARGET_HOME/scripts-backup.iso"; then
     echo "[OK] Disc written successfully."
 else
     echo "[ERROR] Disc write failed!"
@@ -93,5 +99,5 @@ sudo umount "$CD_MOUNT"
 rmdir "$CD_MOUNT"
 
 rm -f "$TMP_LIST"
-rm -f /home/vladislav/scripts-backup.iso
+rm -f "$TARGET_HOME/scripts-backup.iso"
 rm -f SHA256SUMS MANIFEST.txt

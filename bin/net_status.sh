@@ -5,7 +5,8 @@
 
 set -euo pipefail
 
-source "$HOME/scripts/shared-lib/net.sh"
+# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+source "$HOME/scripts/git-security/lib/init.sh"
 
 echo "=== Network status ==="
 nmcli networking
