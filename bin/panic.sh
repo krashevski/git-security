@@ -14,13 +14,8 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-
-BIN_DIR="$BASE_DIR/bin"
-LIB_DIR="$BASE_DIR/lib"
-
-source "$LIB_DIR/net.sh"
+# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+source "$HOME/scripts/git-security/lib/init.sh"
 
 STATE_DIR="$HOME/scripts/git-security/state"
 STATE_FILE="$STATE_DIR/panic_state"

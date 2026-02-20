@@ -12,14 +12,15 @@ DOC
 
 set -euo pipefail
 
-REAL_USER="${SUDO_USER:-$USER}"
-REAL_HOME="$(getent passwd "$REAL_USER" | cut -d: -f6)"
-SOURCE_DIR="$REAL_HOME/scripts"
+# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+source "$HOME/scripts/git-security/lib/init.sh"
 
-[[ -d "$SOURCE_DIR" ]] || {
-    echo "[ERROR] SOURCE_DIR not found: $SOURCE_DIR"
-    exit 1
-}
+# -------------------------------------------------------------
+# Определяем целевой HOME
+# -------------------------------------------------------------
+TARGET_HOME="$(resolve_target_home)" || die "Failed to resolve target home"
+SOURCE_DIR="$TARGET_HOME/scripts"
+[[ -d "$SOURCE_DIR" ]] || die "SOURCE_DIR not found: $SOURCE_DIR"
 
 TMP_LIST="/tmp/zip_to_burn.lst"
 DEVICE="$(ls /dev/sr* 2>/dev/null | head -n1)"

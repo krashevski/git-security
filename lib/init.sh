@@ -11,17 +11,7 @@ DOC
 [[ -n "${_GITSEC_INIT_LOADED:-}" ]] && return 0
 _GITSEC_INIT_LOADED=1
 
-# 2. Структура проекта
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-BASE_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-BIN_DIR="$BASE_DIR/bin"
-STATE_DIR="$BASE_DIR/state"
-LOGS_DIR="$BASE_DIR/logs"
-RUN_LOG="$LOGS_DIR/git-security.log"
-
-export BASE_DIR BIN_DIR STATE_DIR LOGS_DIR RUN_LOG
-
-# 3. Подключение общего lib (shared-lib)
+# 2. Подключение общего lib (shared-lib)
 SHARED_LIB="$HOME/scripts/shared-lib"
 
 if [[ -f "$SHARED_LIB/init_core.sh" ]]; then
@@ -31,9 +21,26 @@ else
     exit 1
 fi
 
-# 4, Подключение i18n (опционально)
+# 3. Структура проекта
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+BIN_DIR="$BASE_DIR/bin"
+STATE_DIR="$BASE_DIR/state"
+LOGS_DIR="$BASE_DIR/logs"
+RUN_LOG="$LOGS_DIR/git-security.log"
+LIB_DIR="$SHARED_LIB"
+export BASE_DIR BIN_DIR STATE_DIR LOGS_DIR RUN_LOG LIB_DIR
+
+# 4. Базовые библиотеки
+source "$LIB_DIR/logging.sh"
+# source "$LIB_DIR/cleanup.sh"
+source "$LIB_DIR/user_home.sh"
+
+# 5. Общие traps (если нужно)
+# trap cleanup EXIT
+
+# 6. Подключение i18n (опционально)
 if [[ -f "$SHARED_LIB/i18n.sh" ]]; then
     source "$SHARED_LIB/i18n.sh"
     command -v init_app_lang >/dev/null && init_app_lang
 fi
-

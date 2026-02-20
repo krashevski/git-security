@@ -5,7 +5,8 @@
 
 set -euo pipefail
 
-BIN_DIR="$(cd "$(dirname "$0")" && pwd)"
+# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+source "$HOME/scripts/git-security/lib/init.sh"
 
 clear
 
@@ -35,7 +36,7 @@ while true; do
         3)
             echo "[WARNING] PANIC MODE ACTIVATION"
             read -rp "Are you sure? (yes/no): " confirm
-            if [[ "$confirm" == "yes" ]]; then
+            if [[ "$confirm" = "y" && "$confirm" = "yes" ]]; then
                 "$BIN_DIR/panic.sh"
             else
                 echo "[INFO] Panic cancelled"
