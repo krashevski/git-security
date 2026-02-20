@@ -1,4 +1,4 @@
-# git_security
+# git-security
 
 A set of scripts for secure Git management and network access control when working with repositories.
 
@@ -18,7 +18,28 @@ A set of scripts for secure Git management and network access control when worki
 - `./burn_zip_archives.sh` - burning ZIP archives to CD/DVD.
 - `./menu.sh` - GIT-SECURITY control menu.
 
-## Installation
+## GIT-SECURITY Brandmauer scripts
+
+- `git-pull.sh` - GIT-SECURITY Brandmauer
+- `git-push.sh` - GIT-SECURITY Brandmauer
+- `git-rebase.sh` - GIT-SECURITY Brandmauer
+- `giy-state.sh` - git operation definition
+
+## Dependencies
+
+`git-security` uses shared functions from the [`shared-lib`](https://github.com/krashevski/shared-lib) library.
+
+For the project to work, you need to include `shared-lib` in the `shared-lib` directory.
+
+### Installing `shared-lib` via a submodule
+
+If you are cloning the project for the first time:
+
+```bash
+git clone --recurse-submodules https://github.com/krashevski/git-security.git
+```
+
+## Installation git-security
 
 1. Clone the repository:
 

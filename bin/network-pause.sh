@@ -13,11 +13,8 @@
 
 set -euo pipefail
 
-BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-BIN_DIR="$BASE_DIR/bin"
-LIB_DIR="$BASE_DIR/lib"
-
-source "$LIB_DIR/net.sh"
+# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+source "$HOME/scripts/git-security/lib/init.sh"
 
 echo "[INFO] Checking network status..."
 

@@ -12,12 +12,20 @@ DOC
 
 set -euo pipefail
 
-SOURCE_DIR="/home/vladislav/scripts"
+REAL_USER="${SUDO_USER:-$USER}"
+REAL_HOME="$(getent passwd "$REAL_USER" | cut -d: -f6)"
+SOURCE_DIR="$REAL_HOME/scripts"
+
+[[ -d "$SOURCE_DIR" ]] || {
+    echo "[ERROR] SOURCE_DIR not found: $SOURCE_DIR"
+    exit 1
+}
+
 TMP_LIST="/tmp/zip_to_burn.lst"
 DEVICE="$(ls /dev/sr* 2>/dev/null | head -n1)"
 [[ -z "$DEVICE" ]] && { echo "[ERROR] No optical drive found"; exit 1; }
 
-cd /home/vladislav/scripts
+cd "$SOURCE_DIR"
 
 # Создаём SHA256-суммы всех ZIP
 sha256sum *.zip > SHA256SUMS

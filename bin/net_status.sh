@@ -5,6 +5,8 @@
 
 set -euo pipefail
 
+source "$HOME/scripts/shared-lib/net.sh"
+
 echo "=== Network status ==="
 nmcli networking
 echo

@@ -1,4 +1,4 @@
-# git_security
+# git-security
 
 Набор скриптов для безопасного управления Git и контроля доступа к сети при работе с репозиториями.
 
@@ -18,7 +18,20 @@
 - `./burn_zip_archives.sh` - запись ZIP-архивов на CD/DVD.
 - `./menu.sh` — меню управления GIT-SECURITY.
 
-## Установка
+## Зависимости
+
+`git-security` использует общие функции из библиотеки [`shared-lib`](https://github.com/krashevski/shared-lib).  
+Для работы проекта необходимо подключить `shared-lib` в каталог `lib/shared-lib`.
+
+### Установка `shared-lib` через сабмодуль
+
+Если вы клонируете проект впервые:
+
+```bash
+git clone --recurse-submodules https://github.com/krashevski/git-security.git
+```
+
+## Установка git-security
 
 1. Клонируйте репозиторий:
 

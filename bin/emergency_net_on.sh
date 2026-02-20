@@ -1,21 +1,22 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 # =============================================================
 # emergency_net_on.sh — включить сеть обратно
-# -------------------------------------------------------------
+# =============================================================
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Подключаем init.sh проекта, чтобы определить SHARED_LIB, LOGS_DIR и т.д.
+source "$HOME/scripts/git-security/lib/init.sh"
 
-# Подключаем библиотеку
-source "$SCRIPT_DIR/../lib/net.sh"
-
-STATUS_SCRIPT="$SCRIPT_DIR/net_status.sh"
+# Подключаем net.sh из shared-lib
+source "$SHARED_LIB/net.sh"
 
 echo "[SECURITY] Restoring network..."
 
+# Включаем сеть
 nmcli networking on
 
-wait_net_up "$STATUS_SCRIPT"
+# Ждём, пока сеть реально станет доступна
+wait_net_up net_is_up
 
 echo "[OK] Network enabled and verified"
