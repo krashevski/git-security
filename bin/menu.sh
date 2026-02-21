@@ -35,12 +35,20 @@ while true; do
             ;;
         3)
             echo "[WARNING] PANIC MODE ACTIVATION"
+
             read -rp "Are you sure? (yes/no): " confirm
-            if [[ "$confirm" = "y" && "$confirm" = "yes" ]]; then
-                "$BIN_DIR/panic.sh"
-            else
-                echo "[INFO] Panic cancelled"
-            fi
+
+            case "${confirm,,}" in
+                y|yes)
+                    "$BIN_DIR/panic.sh"
+                    ;;
+                n|no|"")
+                    echo "[INFO] Panic cancelled"
+                    ;;
+                *)
+                    echo "[WARN] Unknown answer: $confirm"
+                    ;;
+            esac
             ;;
         4)  "$BIN_DIR/burn_zip_archives.sh" ;; # Записать ZIP-архивы git-security на CD/DVD
         0)

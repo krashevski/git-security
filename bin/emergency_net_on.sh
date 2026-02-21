@@ -14,6 +14,8 @@ echo "[SECURITY] Restoring network..."
 nmcli networking on
 
 # Ждём, пока сеть реально станет доступна
-wait_net_up net_is_up
+# wait_net_up net_is_up
+
+wait_net_up "$BIN_DIR/net_check.sh" || true
 
 echo "[OK] Network enabled and verified"

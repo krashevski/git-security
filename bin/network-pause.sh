@@ -27,7 +27,7 @@ else
     echo "[SECURITY] Network is already DISABLED"
     echo
     echo
-    read -r -p "[QUESTION] Хотите включить сеть сейчас? (y/n): " answer
+    read -r -p "[QUESTION] Хотите включить сеть сейчас? (yes/no): " answer
 
     case "${answer,,}" in
         y|yes)
