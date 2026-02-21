@@ -37,7 +37,7 @@ echo "[INFO] Running git push..."
 
 git push "$@"
 
-"$BIN_DIR/network-pause.sh"
+# "$BIN_DIR/net-pause.sh"
 
 # --- Отключаем сеть и очищаем состояние ---
 echo "[INFO] Disabling network..."

@@ -28,7 +28,7 @@ while true; do
 
     case "$choice" in
         1)
-            "$BIN_DIR/net_status.sh"
+            "$BIN_DIR/net-status.sh"
             ;;
         2)
             "$BIN_DIR/network-pause.sh"
@@ -50,7 +50,7 @@ while true; do
                     ;;
             esac
             ;;
-        4)  "$BIN_DIR/burn_zip_archives.sh" ;; # Записать ZIP-архивы git-security на CD/DVD
+        4)  "$BIN_DIR/burn-zip-archives.sh" ;; # Записать ZIP-архивы git-security на CD/DVD
         0)
             echo "Bye."
             exit 0

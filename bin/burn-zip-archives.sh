@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # =============================================================
-# burn_zip_archives.sh — запись ZIP-архивов на CD/DVD
+# burn-zip-archives.sh — запись ZIP-архивов на CD/DVD
 # Проект: git-security
 # -------------------------------------------------------------
 :<<'DOC'
 # Использование: 
 chmod +x burn_zip_archives.sh
-./burn_zip_archives.sh
+./burn-zip-archives.sh
 DOC
 # =============================================================
 

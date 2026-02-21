@@ -18,15 +18,15 @@ echo "[INFO] Enabling network for git rebase..."
 
 "$BIN_DIR/emergency_net_on.sh"
 
-# --- Попытка git push с retry ---
+# --- Попытка git rebase с retry ---
 MAX_RETRIES=3
 COUNT=0
 
-until git push "$@"; do
+until git rebase "$@"; do
     COUNT=$((COUNT+1))
-    echo "[WARN] git push failed (attempt $COUNT/$MAX_RETRIES)"
+    echo "[WARN] git rebase failed (attempt $COUNT/$MAX_RETRIES)"
     if (( COUNT >= MAX_RETRIES )); then
-        echo "[ERROR] git push failed after $MAX_RETRIES attempts"
+        echo "[ERROR] git rebase failed after $MAX_RETRIES attempts"
         break
     fi
     echo "[INFO] Retrying in 5 seconds..."
@@ -35,9 +35,9 @@ done
 
 echo "[INFO] Running git rebase..."
 
-git push "$@"
+git rebase "$@"
 
-"$BIN_DIR/network-pause.sh"
+# "$BIN_DIR/net-pause.sh"
 
 # --- Отключаем сеть и очищаем состояние ---
 echo "[INFO] Disabling network..."

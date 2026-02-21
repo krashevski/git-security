@@ -35,6 +35,7 @@ export BASE_DIR BIN_DIR STATE_DIR LOGS_DIR RUN_LOG LIB_DIR
 source "$LIB_DIR/logging.sh"
 # source "$LIB_DIR/cleanup.sh"
 source "$LIB_DIR/user_home.sh"
+source "$LIB_DIR/net.sh"
 
 # 5. Общие traps (если нужно)
 # trap cleanup EXIT

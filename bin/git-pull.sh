@@ -24,9 +24,9 @@ COUNT=0
 
 until git push "$@"; do
     COUNT=$((COUNT+1))
-    echo "[WARN] git push failed (attempt $COUNT/$MAX_RETRIES)"
+    echo "[WARN] git pull failed (attempt $COUNT/$MAX_RETRIES)"
     if (( COUNT >= MAX_RETRIES )); then
-        echo "[ERROR] git push failed after $MAX_RETRIES attempts"
+        echo "[ERROR] git pull failed after $MAX_RETRIES attempts"
         break
     fi
     echo "[INFO] Retrying in 5 seconds..."
@@ -35,16 +35,16 @@ done
 
 echo "[INFO] Running git pull..."
 
-git push "$@"
+git pull "$@"
 
-"$BIN_DIR/network-pause.sh"
+# "$BIN_DIR/net-pause.sh"
 
 # --- Отключаем сеть и очищаем состояние ---
 echo "[INFO] Disabling network..."
-if [[ -f "$BIN_DIR/network-pause.sh" ]]; then
-    "$BIN_DIR/network-pause.sh"
+if [[ -f "$BIN_DIR/net-pause.sh" ]]; then
+    "$BIN_DIR/net-pause.sh"
 else
-    echo "[WARN] network-pause.sh not found, skipping network pause"
+    echo "[WARN] net-pause.sh not found, skipping network pause"
 fi
 
 echo "[INFO] Disabling network..."

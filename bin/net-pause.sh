@@ -7,7 +7,6 @@ set -euo pipefail
 
 # подключаем init и shared-lib
 source "$HOME/scripts/git-security/lib/init.sh"
-source "$SHARED_LIB/net.sh"
 
 echo "[SECURITY] Pausing network..."
 nmcli networking off

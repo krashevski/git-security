@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================
-# net_status.sh - network status
+# net-status.sh - network status
 # -------------------------------------------------------------
 
 set -euo pipefail
