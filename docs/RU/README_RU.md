@@ -52,7 +52,7 @@ git clone https://github.com/krashevski/git_security.git
 
 2. Перейдите в каталог проекта:
 ```bash
-cd git_security
+cd git-security
 ```
 
 3. Предоставьте скриптам права на выполнение:
@@ -64,7 +64,7 @@ chmod +x *.sh
 
 Запустите основной скрипт:
 ```bash
-./bin/menu.sh
+./net-security/bin/menu.sh
 ```
 Логи создаются в каталоге ./logs.
 

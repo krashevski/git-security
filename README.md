@@ -53,7 +53,7 @@ git clone https://github.com/krashevski/git_security.git
 
 2. Change to the project directory:
 ```bash
-cd git_security
+cd git-security
 ```
 
 3. Grant execute permissions for the scripts:
@@ -65,7 +65,7 @@ chmod +x *.sh
 
 Run the main script:
 ```bash
-./bin/menu.sh
+./net-security/bin/menu.sh
 ```
 Logs are created in the ./logs directory.
 
