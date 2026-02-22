@@ -10,20 +10,24 @@ A set of scripts for secure Git management and network access control when worki
 - Enable or disable the network, change the password if necessary in emergency mode.
 - Log security-related actions.
 
-## Operational Scripts
+## Operational scripts Net-security
 
-- `./panic.sh` — controls network enablement and disablement and password changes for PANIC MODE (emergency shutdown).
-- `./network-pause.sh` - сentral network pause controller.
-- `./net_status.sh` - network status.
-- `./burn_zip_archives.sh` - burning ZIP archives to CD/DVD.
-- `./menu.sh` - GIT-SECURITY control menu.
+- `bin/panic.sh` — controls network enablement and disablement and password changes for PANIC MODE (emergency shutdown).
+- `bin/network-pause.sh` - сentral network pause controller.
+- `bin/net-status.sh` - network status.
+- `bin/burn-zip-archives.sh` - burning ZIP archives to CD/DVD.
+- `bin/menu.sh` - GIT-SECURITY control menu.
 
-## GIT-SECURITY Brandmauer scripts
+## Git-brandmauer scripts
 
-- `git-pull.sh` - GIT-SECURITY Brandmauer
-- `git-push.sh` - GIT-SECURITY Brandmauer
-- `git-rebase.sh` - GIT-SECURITY Brandmauer
-- `giy-state.sh` - git operation definition
+- `bin/git` - wrapper for testing git pull and git fetch
+- `hooks/common.sh` - mode definition script
+- `hooks/enable_hooks.sh` - manual setup
+- `hooks/pre-fetch` - git fetch hook trigger
+- `hooks/pre-push` - git push hook trigger
+- `hooks/pre-rebase` - git rebase hook trigger
+- `state/mode` - status data
+- `menu/controlls.sh` - commands to test
 
 ## Dependencies
 

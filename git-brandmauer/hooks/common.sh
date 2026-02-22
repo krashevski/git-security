@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# common.sh
+# common.sh - mode definition script
 
 set -euo pipefail
 
