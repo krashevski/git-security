@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# pre-push
+
+set -euo pipefail
+
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$HOOK_DIR/common.sh"
+
+MODE="$(get_git_mode)"
+
+if [[ "$MODE" == "SAFE" ]]; then
+    die_security "git push is BLOCKED (SAFE MODE enabled)"
+fi
+
+exit 0

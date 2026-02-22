@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# pre-fetch
+
+set -euo pipefail
+
+echo "PRE-FETCH HOOK TRIGGERED" >&2
+exit 1
+
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$HOOK_DIR/common.sh"
+
+MODE="$(get_git_mode)"
+
+if [[ "$MODE" == "SAFE" ]]; then
+    die_security "git fetch / pull is BLOCKED (SAFE MODE enabled)"
+fi
+
+exit 0
