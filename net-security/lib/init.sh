@@ -24,7 +24,7 @@ fi
 # 3. Структура проекта
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-SCRIPT_DIR="$BASE_DIR/scripts"
+SCRIPT_DIR="$BASE_DIR"
 STATE_DIR="$BASE_DIR/state"
 LOGS_DIR="$BASE_DIR/logs"
 RUN_LOG="$LOGS_DIR/git-security.log"

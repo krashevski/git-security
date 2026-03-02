@@ -39,7 +39,7 @@ mode_color() {
 
 show_menu() {
     echo -e "${BOLD}${CYAN}====================================================${RESET}"
-    echo -e "               ${BOLD}GIT-BRANDMAUER MENU${RESET}                 "
+    echo -e "               ${BOLD}${CYAN}GIT-BRANDMAUER MENU${RESET}                 "
     echo -e "${BOLD}${CYAN}====================================================${RESET}"
     echo -e "${BOLD}Select repository to manage:${RESET}"
 
@@ -55,7 +55,7 @@ show_menu() {
         color_mode=$(mode_color "$current_mode")
         echo -e "  ${GREEN}$((i+1))) $repo${RESET} (mode: ${color_mode}$current_mode${RESET})"
     done
-
+    echo
     echo -e "  ${RED}0) Exit${RESET}"
     echo -e "${BOLD}${CYAN}====================================================${RESET}"
 }
