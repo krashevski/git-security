@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# git-brandmauer-mode
+# Управление режимами per-repo для git-brandmauer
+# Usage:
+#   ./git-brandmauer-mode <repo> <mode>
+# Modes: SAFE, OPEN, ONLY_PUSH
+
+set -euo pipefail
+
+STATE_DIR="$HOME/.git-security/state"
+
+# Проверка аргументов
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <repo> <mode>"
+    echo "Modes: SAFE, OPEN, ONLY_PUSH"
+    exit 1
+fi
+
+REPO="$1"
+MODE="$2"
+
+case "$MODE" in
+    SAFE|OPEN|ONLY_PUSH) ;;
+    *)
+        echo "[ERROR] Invalid mode: $MODE"
+        exit 1
+        ;;
+esac
+
+# Создание state dir, если нет
+mkdir -p "$STATE_DIR"
+
+# Путь к файлу репозитория
+MODE_FILE="$STATE_DIR/${REPO}.mode"
+
+# Запись режима
+echo "$MODE" > "$MODE_FILE"
+
+echo "[INFO] $REPO mode set to $MODE"

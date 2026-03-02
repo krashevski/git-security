@@ -11,18 +11,15 @@ STATE_DIR="$SECURITY_ROOT/state"
 MODE_FILE="$STATE_DIR/mode"
 
 get_git_mode() {
-    local repo
-    repo="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo "")")"
-    local mode_file="$HOME/.git-security/state/${repo}.mode"
-
-    if [[ -f "$mode_file" ]]; then
-        mode="$(<"$mode_file")"
+    local mode
+    if [[ -f "$MODE_FILE" ]]; then
+        mode="$(<"$MODE_FILE")"
     else
-        mode="$(<"$HOME/.git-security/state/global_mode" 2>/dev/null || echo "SAFE")"
+        mode="SAFE"
     fi
 
     case "$mode" in
-        OPEN|SAFE|NORMAL|ONLY_PUSH)
+        OPEN|SAFE|NORMAL)
             echo "$mode"
             ;;
         *)

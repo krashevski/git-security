@@ -12,7 +12,7 @@ DOC
 
 set -euo pipefail
 
-# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+# Подключаем init.sh — он сам определяет BASE_DIR, SCRIPT_DIR и т.д.
 source "$HOME/scripts/git-security/net-security/lib/init.sh"
 
 # -------------------------------------------------------------

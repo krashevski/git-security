@@ -14,7 +14,7 @@
 
 set -euo pipefail
 
-# Подключаем init.sh — он сам определяет BASE_DIR, BIN_DIR и т.д.
+# Подключаем init.sh — он сам определяет BASE_DIR, SCRIPT_DIR и т.д.
 source "$HOME/scripts/git-security/net-security/lib/init.sh"
 
 STATE_DIR="$HOME/scripts/git-security/net-security/state"
@@ -39,31 +39,31 @@ COUNT=$((COUNT + 1))
 
 case "$COUNT" in
     1)
-        "$BIN_DIR/emergency_net_off.sh"
+        "$SCRIPT_DIR/emergency_net_off.sh"
         echo "[OK] Network is disabled for 10 seconds"
         sleep 10
-        "$BIN_DIR/emergency_net_on.sh"
-        wait_net_up "$BIN_DIR/net_check.sh" || true
+        "$SCRIPT_DIR/emergency_net_on.sh"
+        wait_net_up "$SCRIPT_DIR/net_check.sh" || true
         ;;
     2)
-        "$BIN_DIR/emergency_net_off.sh"
+        "$SCRIPT_DIR/emergency_net_off.sh"
         echo "[OK] Network is disabled for 5 minutes"
         sleep 300
-        "$BIN_DIR/emergency_net_on.sh"
-        wait_net_up "$BIN_DIR/net_check.sh" || true
+        "$SCRIPT_DIR/emergency_net_on.sh"
+        wait_net_up "$SCRIPT_DIR/net_check.sh" || true
         ;;
     3)
-        if "$BIN_DIR/passwd_offline.sh"; then
+        if "$SCRIPT_DIR/passwd_offline.sh"; then
             echo "[OK] Password changed successfully"
-            "$BIN_DIR/emergency_net_on.sh"
-            wait_net_up "$BIN_DIR/net_check.sh" || true
+            "$SCRIPT_DIR/emergency_net_on.sh"
+            wait_net_up "$SCRIPT_DIR/net_check.sh" || true
         else
             echo "[ERROR] Password was NOT changed"
         fi
         ;;
 
     4) 
-        "$BIN_DIR/emergency_net_off.sh"
+        "$SCRIPT_DIR/emergency_net_off.sh"
         echo "[SECURITY] There is a serious network issue. Please contact support."
         COUNT=0
         ;;

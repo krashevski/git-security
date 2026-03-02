@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# pre-merge-commit
+
+set -euo pipefail
+
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$HOOK_DIR/common.sh"
+
+MODE="$(get_git_mode)"
+
+if [[ "$MODE" != "OPEN" ]]; then
+    die_security "git merge is BLOCKED (mode=$MODE)"
+fi
+
+exit 0

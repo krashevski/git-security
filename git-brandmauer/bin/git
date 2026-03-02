@@ -1,34 +1,33 @@
 #!/usr/bin/env bash
-# ===================================================
-# git - wrapper для тестирования git pull и git fetch
-# ---------------------------------------------------
-# директория для срипта : "$HOME"/bin
-# ===================================================
+# bin/git - обёртка, первичный UX-щит
+# ✔ Блокирует:
+#    pull
+#    push
+#    fetch
+#    merge
+# при любом режиме, кроме OPEN
+# ✔ Работает до запуска настоящего git
+# ✔ Защищает от ошибок, IDE, алиасов
 
 set -euo pipefail
 
 REAL_GIT="/usr/bin/git"
-
 CMD="${1:-}"
 shift || true
 
-# ====== ПОЛИТИКА БЕЗОПАСНОСТИ ======
+# Файл состояния
+MODE_FILE="$HOME/.git-security/state/mode"
+MODE="$(cat "$MODE_FILE" 2>/dev/null || echo "NORMAL")"
 
+# ====== ПОЛИТИКА БЕЗОПАСНОСТИ ======
 case "$CMD" in
-    pull|merge)
-        echo "[SECURITY] git $CMD is DISABLED"
-        exit 1
-        ;;
-    fetch)
-        echo "[SECURITY] git fetch is DISABLED"
-        exit 1
-        ;;
-    push)
-        echo "[SECURITY] git push is DISABLED"
-        exit 1
+    pull|push|fetch|merge)
+        if [[ "$MODE" != "OPEN" ]]; then
+            echo "[SECURITY] git $CMD is DISABLED in mode $MODE"
+            exit 1
+        fi
         ;;
 esac
 
 # ====== РАЗРЕШЁННЫЕ КОМАНДЫ ======
 exec "$REAL_GIT" "$CMD" "$@"
-

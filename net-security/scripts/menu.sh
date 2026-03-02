@@ -10,17 +10,28 @@ source "$HOME/scripts/git-security/net-security/lib/init.sh"
 
 clear
 
+# Цвета
+RED="\e[31m"
+GREEN="\e[32m"
+YELLOW="\e[33m"
+BLUE="\e[34m"
+MAGENTA="\e[35m"
+CYAN="\e[36m"
+RESET="\e[0m"
+BOLD="\e[1m"
+
+
 while true; do
-    echo "================================================="
-    echo "        GIT-SECURITY CONTROL MENU"
-    echo "================================================="
-    echo "1) Check network status"
-    echo "2) Pause network (safe mode)"
-    echo "3) PANIC MODE (emergency shutdown)"
-    echo "4) Git-security burn ZIPs"
-    echo "-------------------------------------------------"
-    echo "0) Exit"
-    echo "================================================="
+    echo -e "${BOLD}${CYAN}====================================================${RESET}"
+    echo -e "${BOLD}${CYAN}          GIT-SECURITY CONTROL MENU                  ${RESET}"
+    echo -e "${BOLD}${CYAN}====================================================${RESET}"
+    echo " 1) Check network status"
+    echo " 2) Pause network (safe mode)"
+    echo " 3) PANIC MODE (emergency shutdown)"
+    echo " 4) Git-security burn ZIPs"
+    echo 
+    echo -e " ${RED}0) Exit${RESET}"
+    echo -e "${BOLD}${CYAN}====================================================${RESET}"
     echo -n "Select option: "
 
     read -r choice
@@ -28,10 +39,10 @@ while true; do
 
     case "$choice" in
         1)
-            "$BIN_DIR/net-status.sh"
+            "$SCRIPT_DIR/net-status.sh"
             ;;
         2)
-            "$BIN_DIR/network-pause.sh"
+            "$SCRIPT_DIR/network-pause.sh"
             ;;
         3)
             echo "[WARNING] PANIC MODE ACTIVATION"
@@ -40,7 +51,7 @@ while true; do
 
             case "${confirm,,}" in
                 y|yes)
-                    "$BIN_DIR/panic.sh"
+                    "$SCRIPT_DIR/panic.sh"
                     ;;
                 n|no|"")
                     echo "[INFO] Panic cancelled"
