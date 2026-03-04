@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+LIB_DIR="/usr/local/lib/brandmauer"
+source "$LIB_DIR/core/init.sh"
+source "$LIB_DIR/version.sh"
+source "$LIB_DIR/git/common.sh"
+
+show_help() {
+    cat <<EOF
+Brandmauer v$BRANDMAUER_VERSION
+
+Usage:
+  brandmauer <command>
+
+Commands:
+  git        Git protection tools
+  net        Network security tools
+  status     Show system status
+  version    Show version
+  help       Show this help
+EOF
+}
+
+case "${1:-}" in
+    git)
+        exec "$BASE_DIR/brandmauer-git" "${@:2}"
+        ;;
+    net)
+        exec "$BASE_DIR/brandmauer-net" "${@:2}"
+        ;;
+    status)
+        info "Brandmauer system status:"
+        echo "  Git module: available"
+        echo "  Net module: available"
+        ;;
+    version|--version|-v)
+        echo "Brandmauer v$BRANDMAUER_VERSION"
+        ;;
+    help|-h|--help|"")
+        show_help
+        ;;
+    hooks)
+        case "${2:-}" in
+            enable)
+                git config --global core.hooksPath "/usr/local/share/brandmauer/hooks"
+                echo "Global hooks enabled."
+                ;;
+            disable)
+                git config --global --unset core.hooksPath
+                echo "Global hooks disabled."
+                ;;
+            status)
+                git config --global core.hooksPath || echo "Not configured"
+                ;;
+            *)
+                echo "Usage: brandmauer hooks {enable|disable|status}"
+                ;;
+        esac
+        ;;
+    *)
+        error "Unknown command: $1"
+        show_help
+        exit 1
+        ;;
+esac

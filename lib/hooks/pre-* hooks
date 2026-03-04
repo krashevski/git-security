@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Git pre-<command> hook — Brandmauer v1.0
+
+set -euo pipefail
+
+# Основные пути
+LIB_DIR="/usr/local/lib/brandmauer"
+GIT_DIR="$LIB_DIR/git"
+COMMON="$GIT_DIR/common.sh"
+SECURITY_ROOT="$HOME/.git-security"
+LOG_DIR="$HOME/.local/share/brandmauer/logs"
+LOG_FILE="$LOG_DIR/security.log"
+
+mkdir -p "$SECURITY_ROOT" "$LOG_DIR" "$GIT_DIR"
+
+# Подключаем общие функции
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    echo "[WARN] common.sh missing — some features may not work" >> "$LOG_FILE"
+fi
+# ---------------- LOG ----------------
+log() {
+    mkdir -p "$(dirname "$LOG_DIR")"
+    echo "[$(date '+%F %T')] $*" >> "$LOG_FILE"
+}
+
+[[ -f "$COMMON" ]] || { echo "[ERROR] common.sh missing"; exit 1; }
+source "$COMMON"
+
+BLOCKED_COMMAND="<command>"  # заменить на push, fetch, rebase, merge-commit
+REPO=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo '')")
+MODE=$(get_git_mode)
+
+# ---------------- FORCE / SPECIAL FLAGS ----------------
+if [[ "$*" == *"--force"* ]]; then
+    echo "[SECURITY][$REPO] Force $BLOCKED_COMMAND denied in $MODE mode."
+    log "Force $BLOCKED_COMMAND attempt blocked in $REPO ($MODE)"
+    exit 1
+fi
+
+# ---------------- POLICY ----------------
+case "$BLOCKED_COMMAND" in
+    push|fetch|rebase|merge-commit)
+        if [[ "$MODE" == "SAFE" ]]; then
+            echo "[SECURITY][$REPO] git $BLOCKED_COMMAND is DISABLED in SAFE mode."
+            log "Blocked git $BLOCKED_COMMAND in $REPO (SAFE)"
+            exit 1
+        elif [[ "$MODE" == "NORMAL" ]]; then
+            # например, NORMAL блокирует push/fetch/rebase, но разрешает merge-commit
+            if [[ "$BLOCKED_COMMAND" != "merge-commit" ]]; then
+                echo "[SECURITY][$REPO] git $BLOCKED_COMMAND is DISABLED in NORMAL mode."
+                log "Blocked git $BLOCKED_COMMAND in $REPO (NORMAL)"
+                exit 1
+            fi
+        fi
+        ;;
+esac
+
+log "git $BLOCKED_COMMAND allowed in $REPO ($MODE)"
+exit 0

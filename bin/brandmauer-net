@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+info()  { echo "[INFO] $*"; }
+warn()  { echo "[WARN] $*"; }
+error() { echo "[ERROR] $*" >&2; }
+
+LIB_DIR="/usr/local/lib/brandmauer"
+source "$LIB_DIR/core/init.sh"
+
+source "$LIB_DIR/git/common.sh"
+
+info "Launching Network security module..."
+
+# Здесь подключается net-security
+
+echo "Network module ready."

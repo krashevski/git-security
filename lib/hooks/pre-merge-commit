@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# =============================================================
+# Git pre-merge-commit hook — Brandmauer v1.0
+# SAFE blocks all merges
+# NORMAL allows merges
+# =============================================================
+
+set -euo pipefail
+
+# Основные пути
+LIB_DIR="/usr/local/lib/brandmauer"
+GIT_DIR="$LIB_DIR/git"
+COMMON="$GIT_DIR/common.sh"
+SECURITY_ROOT="$HOME/.git-security"
+LOG_DIR="$HOME/.local/share/brandmauer/logs"
+LOG_FILE="$LOG_DIR/security.log"
+
+mkdir -p "$SECURITY_ROOT" "$LOG_DIR" "$GIT_DIR"
+
+# Подключаем общие функции
+if [[ -f "$COMMON" ]]; then
+    source "$COMMON"
+else
+    echo "[WARN] common.sh missing — some features may not work" >> "$LOG_FILE"
+fi
+
+# ---------------- LOGGING ----------------
+log() {
+    mkdir -p "$(dirname "$LOG_DIR")"
+    echo "[$(date '+%F %T')] $*" >> "$LOG_FILE"
+}
+
+# ---------------- VALIDATION ----------------
+[[ -f "$COMMON" ]] || { echo "[ERROR] common.sh missing"; exit 1; }
+source "$COMMON"
+
+REPO=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo '')")
+MODE=$(get_git_mode)
+BLOCKED_COMMAND="merge-commit"
+
+# ---------------- FORCE / SPECIAL FLAGS ----------------
+if [[ "$*" == *"--force"* ]]; then
+    echo "[SECURITY][$REPO] Force merge denied in $MODE mode."
+    log "Force merge attempt blocked in $REPO ($MODE)"
+    exit 1
+fi
+
+# ---------------- POLICY ----------------
+case "$MODE" in
+    SAFE)
+        echo "[SECURITY][$REPO] Merges are DISABLED in SAFE mode."
+        log "Blocked merge in $REPO (SAFE)"
+        exit 1
+        ;;
+    NORMAL)
+        # Разрешаем обычные слияния
+        log "Merge allowed in $REPO (NORMAL)"
+        ;;
+    OPEN)
+        log "Merge allowed in $REPO (OPEN)"
+        ;;
+    *)
+        # Любой неизвестный режим → безопасный SAFE fallback
+        echo "[SECURITY][$REPO] Unknown mode ($MODE) → merge blocked"
+        log "Blocked merge in $REPO (UNKNOWN mode)"
+        exit 1
+        ;;
+esac
+
+# ---------------- ALLOW ----------------
+exit 0
+log "git $BLOCKED_COMMAND allowed in $REPO ($MODE)"
+exit 0

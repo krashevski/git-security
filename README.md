@@ -2,94 +2,196 @@
 
 A set of scripts for secure Git management and network access control when working with repositories.
 
-## Description
+## System Layout (v1.0 Stable)
 
-git-security helps:
+### Overview
 
-Check network status.
+brandmauer is a system-level security tool designed for Ubuntu-based environments.
+The filesystem layout follows principles compatible with the Filesystem Hierarchy Standard and typical Ubuntu conventions (ecosystem by Canonical Ltd.).
 
-Enable or disable the network, change the password if necessary in emergency mode.
+Version 1.0 defines a **stable and fixed directory structure**.
+This layout will not change in future minor releases.
 
-Log actions related to Git and network security.
+## Installation Paths
 
-## Network security operational scripts
-
-- `bin/panic.sh` — manages enabling and disabling the network, as well as changing passwords for panic mode (emergency shutdown).
-- `bin/network-pause.sh` — central network pause controller.
-- `bin/net-status.sh` — network status.
-- `bin/burn-zip-archives.sh` — burning ZIP archives to CD/DVD.
-- `bin/menu.sh` — GIT-SECURITY management menu.
-
-## Git-brandmauer Scripts
-
-- `chesk.sh` -
-- `common.sh` - mode detection script
-- `git-brandmauer-mode` - mode switching for the current repository
-= `install.sh` - production Installer (hooks-only)
-- `menu.sh` - git-brandmauer interactive menu (per-repo)
-- `uninstall.sh` - git-brandmauer uninstall script
-- `hooks/pre-fetch` - manual configuration
-- `hooks/pre-hook` - hook trigger template for the git command
-- `hooks/pre-merge-commit` - git merge hook trigger
-- `hooks/pre-push` - git push hook trigger
-- `hook/pre-rebase` - git rebase hook trigger
-- `state/mode` - state data
-
-## Dependencies
-
-`git-security` uses shared functions from the [`shared-lib`](https://github.com/krashevski/shared-lib) library.
-
-For the project to work, `shared-lib` must be included in the `lib/shared-lib` directory.
-
-### Installing `shared-lib` via a submodule
-
-If you are cloning the project for the first time:
-
+### 1. CLI Entry Point
 ```bash
-git clone --recurse-submodules https://github.com/krashevski/git-security
+/usr/local/bin/brandmauer
 ```
 
-## Installing git-security
+- Single executable entry point
+- Acts as dispatcher
+- Contains no business logic
 
-1. Clone the repository:
-
+### 2. Core System Library
 ```bash
-git clone https://github.com/krashevski/git_security
+/usr/local/lib/brandmauer/
 ```
 
-2. Change to the project directory:
+Internal structure:
 ```bash
-cd git-security
+lib/brandmauer/
+├── core/        # base utilities, logging, shared functions
+├── git/         # git-brandmauer subsystem
+├── net/         # net-security subsystem
+├── hooks/       # git hook templates
+├── ui/          # menu, output formatting, colors
+└── config.sh    # global configuration
 ```
 
-3. Grant execute permissions to the scripts:
+### Stability Guarantee (v1.0)
+The following are considered stable:
+Directory name brandmauer
+Location `/usr/local/lib/brandmauer`
+Subdirectories:
+* `core`
+* `git`
+* `net`
+* `hooks`
+* `ui`
+Future modules may be added, but existing paths will not change.
+
+### 3. Shared Data (Optional)
 ```bash
-chmod +x *.sh
+/usr/local/share/brandmauer/
 ```
 
-## Usage
+Reserved for:
+* templates
+* static assets
+* documentation snippets
+This directory may not exist if unused.
 
-Run the main network security script:
+### 4. User State Directory
 ```bash
-./net-security/bin/menu.sh
-```
-Logs are created in the ./logs directory.
-
-Run the firewall installation script:
-```bash
-./git-brandmauer/install.sh
+$HOME/.git-security/
 ```
 
-Run the firewall management script:
+Stores:
+* repository modes (SAFE / HARD)
+* registered repositories list
+* runtime state
+User data is never removed without confirmation.
+This location is stable and part of the public system design.
+
+## Architectural Model
+
+The internal flow:
 ```bash
-././git-brandmauer/menu.sh
+CLI → Core → Git / Net → Hooks
 ```
+
+Where:
+* CLI = interface layer
+* Core = shared logic
+* Git / Net = functional subsystems
+* Hooks = repository enforcement layer
+
+## Security Model (v1.0)
+
+### Overview
+brandmauer implements a local repository-level command control layer for Git operations.
+Its purpose is to reduce the risk of accidental or unsafe remote operations in repositories hosted on GitHub and managed locally via Git.
+The system works per repository and enforces security modes that either allow or restrict potentially dangerous commands.
+
+### Core Concept
+Each registered local repository has an assigned security mode:
+`OPEN` — remote operations are allowed
+`SAFE` — selected remote operations are blocked
+The mode is stored locally and enforced automatically.
+
+### Controlled Commands
+In SAFE mode, the following Git commands are restricted:
+* `git push`
+* `git pull`
+* `git fetch`
+* `git rebase`
+* `git merge`
+These commands are considered potentially dangerous because they:
+* modify remote history
+* synchronize remote changes
+* rewrite commit history
+* merge external state into local branches
+
+### Enforcement Layer
+
+Security enforcement is implemented through:
+* repository-level control logic
+* Git hook integration (where applicable)
+* command interception mechanisms
+The protection applies per registered repository, not globally.
+This allows:
+* strict protection for critical repositories
+* flexible operation for development repositories
+
+## Mode Behavior
+
+### OPEN Mode
+* All Git commands operate normally.
+* No restrictions are applied.
+
+### SAFE Mode
+* Controlled commands are blocked.
+* The user receives a clear message explaining the restriction.
+* Local operations (add, commit, status, etc.) remain unaffected.
+
+### Scope of Protection
+brandmauer operates:
+* only on the local machine
+* only for registered repositories
+* only at the Git command level
+It does not:
+* modify GitHub server settings
+* interfere with authentication
+* replace Git itself
+* enforce remote-side policies
+
+### Design Principles
+1. Local-first security
+2. Per-repository control
+3. Minimal intrusion
+4. Explicit mode awareness
+5. User-controlled enforcement
+
+### Threat Model (Practical)
+The system is designed to mitigate:
+* accidental git push to protected branches
+* unintended history rewrites
+* impulsive remote synchronization
+* workflow mistakes during sensitive development phases
+It is not intended to defend against:
+* malicious system-level attacks
+* compromised user accounts
+* server-side breaches
+
+## Net-Security Subsystem
+
+The net module is an integral part of the system and is not optional in v1.0.
+Included tools:
+* panic.sh
+* burn-zip-archives.sh
+* passwd_offline.sh
+* net_check.sh
+* net-pause.sh
+These tools are considered core security utilities and are part of the system design.
+
+## Upgrade Policy
+
+Minor updates (v1.x) will not change filesystem layout.
+Major version changes (v2.0+) may introduce structural changes.
+Install and uninstall scripts rely on this layout.
+
+## Design Philosophy
+
+brandmauer is a system-level security layer for:
+* Git repository control
+* Network state control
+* Emergency security actions
+It is intended for local Ubuntu-based machines and is not designed for mobile or cross-platform deployment.
 
 ## Notes
 
 * The scripts were tested in a home environment (~/.scripts/git_security).
-
-* Can also be used in test mode by changing the log paths and status.
 
 ## License
 
