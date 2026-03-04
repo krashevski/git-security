@@ -1,6 +1,22 @@
-# git-security
+# Git-Brandmauer
 
-A set of scripts for secure Git management and network access control when working with repositories.
+**Git-Brandmauer** is a **modular framework for secure Git repository management and network control**. 
+
+It provides:
+
+- **Interactive menus** for managing repositories, setting repository modes (SAFE, NORMAL, OPEN), and executing network operations.
+- **State-aware repository modes**, stored in `~/.git-security/state/`, ensuring that operations like `git push` are automatically blocked in restricted modes.
+- **Smart Git hook installation**, with `smart-install-hooks.sh` updating only modified hooks and preserving user changes.
+- **Network control scripts** (`net/`) for checking network status, pausing connections, or triggering emergency shutdowns.
+- **Logging system** in `~/.local/share/brandmauer/logs/` to track security events, network actions, and hook enforcement.
+- **Modular directory structure**:
+  - `LIB_DIR` — static scripts and libraries (`/usr/local/lib/brandmauer`)
+  - `SECURITY_ROOT` — local state, hooks (`~/.git-security`)
+  - `LOG_DIR` — logs (`~/.local/share/brandmauer/logs`)
+  - `NET_DIR` — network operation scripts
+- **Enhanced security enforcement** with hooks (pre-push, pre-commit) that respect repository modes and log all actions.
+
+Git-Brandmauer is now a **full system**, not just a set of scripts — it combines repository security, network management, hook automation, and logging in a single modular framework.
 
 ## System Layout (v1.0 Stable)
 
