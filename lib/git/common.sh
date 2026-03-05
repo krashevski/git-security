@@ -44,22 +44,28 @@ get_current_repo_name() {
 
 # ========= PUBLIC: get mode =========
 get_git_mode() {
-
     local repo_name
     repo_name="$(get_current_repo_name)"
 
-    # Если не в репозитории → SAFE
-    [[ -n "$repo_name" ]] || {
-        echo "SAFE"
-        return
-    }
+    local global_mode_file="$STATE_DIR/global_mode"
+
+    # --- GLOBAL MODE --- 
+    if [[ -f "$global_mode_file" ]]; then
+        local gmode
+        gmode="$(<"$global_mode_file")"
+        if [[ "$gmode" == "SAFE" ]]; then
+            echo "SAFE"
+            return
+        fi
+    fi
+
+    # --- REPO MODE ---
+    [[ -n "$repo_name" ]] || { echo "SAFE"; return; }
 
     local repo_mode_file="$STATE_DIR/${repo_name}.mode"
-
     if [[ -f "$repo_mode_file" ]]; then
         local mode
         mode="$(<"$repo_mode_file")"
-
         case "$mode" in
             OPEN|SAFE|NORMAL)
                 echo "$mode"

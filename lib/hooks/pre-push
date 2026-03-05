@@ -16,6 +16,7 @@ source "$SHAREDLIB_DIR/logging.sh"
 LIB_DIR="$PREFIX/lib/brandmauer"
 GIT_DIR="$LIB_DIR/git"
 COMMON="$GIT_DIR/common.sh"
+
 SECURITY_ROOT="$HOME/.git-security"
 LOG_DIR="$HOME/.local/share/brandmauer/logs"
 LOG_FILE="$LOG_DIR/security.log"

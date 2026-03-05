@@ -36,7 +36,7 @@ command -v git >/dev/null 2>&1 || { error "Git not found in PATH"; }
 [[ -d "$BIN_SRC" ]] || error "bin directory not found: $BIN_SRC"
 [[ -d "$LIB_SRC" ]] || error "lib directory not found: $LIB_SRC"
 [[ -d "$HOOKS_SRC" ]] || error "hooks directory not found: $HOOKS_SRC"
-[[ -d "$SHAREDLIB_SRC" ]] || error "shared-lib directory not found: $SHARED_SRC"
+[[ -d "$SHAREDLIB_SRC" ]] || error "shared-lib directory not found: $SHAREDLIB_SRC"
 [[ -f "$MODE_SRC" ]] || error "brandmauer-mode not found: $MODE_SRC"
 
 # ---------------- CREATE DIRECTORIES ----------------
