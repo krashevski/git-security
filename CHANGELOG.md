@@ -7,6 +7,26 @@ and the project follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.0] - 2027-03-08
+
+### Added
+- Scripts: `automatic_safe.sh`, `close_active_repos.sh`, `activity.sh`, `policy.sh`, `state.sh`
+- UI: `settings_menu.sh`, updated `git-menu.sh`
+- Brandmauer hook: `brandmauer_hook.sh`
+- `Close Active Repositories` for quickly SAFE all OPEN/NORMAL repositories
+
+### Changed
+- Updated pre-hooks (`pre-fetch`, `pre-push`, `pre-rebase`)
+- Logging via `logging.sh`
+- Integration with `brandmauer doctor` for Automatic SAFE diagnostics and repository status
+
+### Removed
+- Old pre-hooks (`pre-merge-commit`, `pre-* hooks`)
+
+### Fixed
+- Fixed proper closing of all repositories
+- Improved idle checking in `automatic_safe.sh`
+
 ## [1.0.4] - 2026-03-05
 
 ### Added
