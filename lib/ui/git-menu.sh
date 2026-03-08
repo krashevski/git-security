@@ -76,7 +76,7 @@ show_menu() {
     echo -e " ${BOLD}Brandmauer settings: ${RESET}"
     echo -e "  $manage_index) Manage repositories"
     echo -e "  $repos_index) Close active repositories"
-    echo -e "  $settings_index) Automatic SAFE for commit, checkout, merge"
+    echo -e "  $settings_index) Settings automatic SAFE for commit, checkout, merge"
     echo -e " ${BOLD}Net-security: ${RESET}"
     echo -e "  $network_index) Control network"
     echo -e "  $burn_zip_index) Burn zip archives"
