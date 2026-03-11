@@ -1,5 +1,7 @@
 # Git-Brandmauer
 
+**Languages:** [🇬🇧 English](../../README.md) | [🇷🇺 Русский](README_RU.md) | [🇯🇵 日本語](../JA/README_JA.md)
+
 **Git-Brandmauer** — это **модульный фреймворк для безопасного управления репозиториями Git и контроля сети**.
 
 Он предоставляет:

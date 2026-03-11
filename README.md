@@ -1,5 +1,7 @@
 # Git-Brandmauer
 
+**Languages:** [🇬🇧 English](README.md) | [🇷🇺 Русский](/docs/RU/README_RU.md) | [🇯🇵 日本語](/docs/JA/README_JA.md)
+
 **Git-Brandmauer** is a **modular framework for secure Git repository management and network control**. 
 
 It provides:

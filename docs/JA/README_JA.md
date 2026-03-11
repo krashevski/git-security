@@ -1,5 +1,7 @@
 # Git-Brandmauer
 
+**Languages:** [🇬🇧 English](../../README.md) | [🇷🇺 Русский](../RU/README_RU.md) | [🇯🇵 日本語](README_JA.md)
+
 **Git-Brandmauer** は、**安全な Git リポジトリ管理とネットワーク制御のためのモジュラーフレームワーク** です。
 
 以下の機能を提供します。
