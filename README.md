@@ -222,3 +222,9 @@ MIT
 ## Author
 
 Vladislav Krashevsky, ChatGPT support
+
+## 🖼️ Screenshots
+
+<p align="center"> 
+<img src="images/git-brandmauer.png" alt="Git-Brandmauer" width="600"/>
+</p>
