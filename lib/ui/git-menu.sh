@@ -63,7 +63,7 @@ show_menu() {
         mode_file="$STATE_DIR/${repo_name}.mode"
         [[ -f "$mode_file" ]] && current_mode=$(<"$mode_file") || current_mode="SAFE"
         color_mode=$(mode_color "$current_mode")
-        echo -e "  $((i+1))) $repo_name (mode: ${color_mode}$current_mode${RESET})"
+        echo -e "   $((i+1))) $repo_name (mode: ${color_mode}$current_mode${RESET})"
     done
 
     repo_count=${#REPOS[@]}
@@ -74,12 +74,12 @@ show_menu() {
     burn_zip_index=$((repo_count+5))
 
     echo -e " ${BOLD}Brandmauer settings: ${RESET}"
-    echo -e "  $manage_index) Manage repositories"
-    echo -e "  $repos_index) Close active repositories"
-    echo -e "  $settings_index) Settings automatic SAFE for commit, checkout, merge"
+    echo -e "   $manage_index) Manage repositories"
+    echo -e "   $repos_index) Close active repositories"
+    echo -e "   $settings_index) Settings automatic SAFE for commit, checkout, merge"
     echo -e " ${BOLD}Net-security: ${RESET}"
-    echo -e "  $network_index) Control network"
-    echo -e "  $burn_zip_index) Burn zip archives"
+    echo -e "   $network_index) Control network"
+    echo -e "   $burn_zip_index) Burn zip archives"
     echo
     echo -e " ${RED}0) Exit ${RESET}"
     echo -e "${BOLD}${CYAN}====================================================${RESET}"
